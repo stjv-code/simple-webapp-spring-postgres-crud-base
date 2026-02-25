@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class Controllers {
 
     @PostMapping("/")
-    public ResponseEntity<?> Post(@RequestBody String entity) {
+    public ResponseEntity<?> Post(@RequestBody DTOUser entity) {
         
         return ResponseEntity.ok("Guardado");
     }
