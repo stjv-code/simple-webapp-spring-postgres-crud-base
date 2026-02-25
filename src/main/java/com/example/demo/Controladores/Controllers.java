@@ -19,7 +19,16 @@ public class Controllers {
 
     @PostMapping("/")
     public ResponseEntity<?> Post(@RequestBody DTOUser entity) {
-        
+        if (entity.getName() == null || entity.getName().trim().isEmpty() || entity.getName().length() > 20) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: El usuario no debe estar vacio ni ser mayor a 20 caracteres.");
+        }
+        if (entity.getPassword() == null || entity.getPassword().trim().isEmpty() || entity.getPassword().length() > 12) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: la contraseña no debe estar vacia ni ser mayor a 12 caracteres");
+        }
         return ResponseEntity.ok("Guardado");
     }
 
