@@ -46,12 +46,14 @@ public class Controllers {
 
     @GetMapping("/")
     public ResponseEntity<?> GetAll() {
-        return ResponseEntity.ok("Todos los usuarios");
+        return ResponseEntity.ok(Repository.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> Get(@PathVariable Long id) {
-        return ResponseEntity.ok("Usuario independiente");
+        return Repository.findById(id)
+            .map(user -> ResponseEntity.ok(user))
+            .orElse(ResponseEntity.notFound().build());
     }
     
 }
