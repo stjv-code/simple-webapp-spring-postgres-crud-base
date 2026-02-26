@@ -1,5 +1,6 @@
 package com.example.demo.Controladores;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +26,13 @@ public class Controllers {
 
     @PostMapping("/")
     public ResponseEntity<?> Post(@RequestBody DTOUser entity) {
+
+        if (Repository.existsByName(entity.getName())) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body("Error: El nombre de usuario " + entity.getName() + " ya existe.");
+        }
+
         if (entity.getName() == null || entity.getName().trim().isEmpty() || entity.getName().length() > 20) {
             return ResponseEntity
                     .badRequest()
